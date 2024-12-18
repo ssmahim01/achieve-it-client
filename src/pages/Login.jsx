@@ -4,6 +4,7 @@ import webLogo from "../assets/images/logo.png";
 import Lottie from "lottie-react";
 import useAuth from "../context/useAuth";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Login = () => {
   const { loginWithGoogle, loginWithEmailPass } = useAuth();
@@ -22,6 +23,12 @@ const Login = () => {
     loginWithEmailPass(email, password)
       .then((result) => {
         const user = result.user;
+
+        axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt-access`,
+          {email: email}, {withCredentials: true}
+        )
+
         Swal.fire({
           position: "center",
           icon: "success",
