@@ -56,14 +56,14 @@ const AuthProvider = ({children}) => {
                     `${import.meta.env.VITE_API_URL}/jwt-access`,
                     user, {withCredentials: true}
                   )
-                  .then(res => setLoading(false))
+                  setLoading(false)
             }
             else{
                 axios.post(
                     `${import.meta.env.VITE_API_URL}/log-out`,
                     {}, {withCredentials: true}
                   )
-                  .then(res => setLoading(false))
+                  setLoading(false)
             }
         });
 

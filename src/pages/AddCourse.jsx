@@ -16,6 +16,7 @@ const AddCourse = () => {
     const formInfo = Object.fromEntries(formData.entries());
 
     const poster = {
+      name: user?.displayName,
       email: user?.email,
       photo: user?.photoURL,
     };

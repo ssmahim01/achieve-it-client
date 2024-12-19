@@ -1,13 +1,13 @@
 import Lottie from "lottie-react";
 import registerBG from "../assets/images/Lottie-Files/register.json";
 import logo from "../assets/images/logo.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../context/useAuth";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Register = () => {
   const { createUser, updateInfo, loginWithGoogle, logOut } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
@@ -59,6 +59,13 @@ const Register = () => {
     loginWithGoogle()
       .then((result) => {
         const user = result.user;
+
+        axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt-access`,
+          { email: user?.email },
+          { withCredentials: true }
+        );
+
         Swal.fire({
           icon: "success",
           title: "Success!",
@@ -67,9 +74,11 @@ const Register = () => {
           imageWidth: 300,
           imageHeight: 200,
           imageAlt: "User Profile",
+          showConfirmButton: false,
+          timer: 2500,
         });
 
-        navigate(location?.state ? location.state : "/");
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;

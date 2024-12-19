@@ -26,8 +26,9 @@ const Login = () => {
 
         axios.post(
           `${import.meta.env.VITE_API_URL}/jwt-access`,
-          {email: email}, {withCredentials: true}
-        )
+          { email: email },
+          { withCredentials: true }
+        );
 
         Swal.fire({
           position: "center",
@@ -53,6 +54,13 @@ const Login = () => {
     loginWithGoogle()
       .then((result) => {
         const user = result.user;
+
+        axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt-access`,
+          { email: user?.email },
+          { withCredentials: true }
+        );
+
         Swal.fire({
           icon: "success",
           title: "Success!",
@@ -61,6 +69,8 @@ const Login = () => {
           imageWidth: 300,
           imageHeight: 200,
           imageAlt: "User Profile",
+          showConfirmButton: false,
+          timer: 2500,
         });
 
         navigate(location?.state ? location.state : "/");
