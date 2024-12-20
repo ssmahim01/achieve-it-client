@@ -113,7 +113,7 @@ const CourseDetails = () => {
 
           <p className="mt-2 text-lg text-gray-600 ">{description}</p>
           <p className="mt-6 text-sm font-bold text-gray-600 ">
-            Buyer Details:
+            Poster Details:
           </p>
           <div className="flex items-center gap-5">
             <div>

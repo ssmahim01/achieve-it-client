@@ -3,6 +3,7 @@ import BidTableRow from "../components/BidTableRow";
 import useAuth from "../context/useAuth";
 import useAxiosSecure from "../context/useAxiosSecure";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MyBids = () => {
   const [bids, setBids] = useState([]);
@@ -11,7 +12,9 @@ const MyBids = () => {
   const secureAxios = useAxiosSecure();
 
   const fetchBids = async () => {
-    const { data } = await secureAxios.get(`/my-bids?email=${user?.email}`);
+    const { data } = await secureAxios.get(`/my-bids/${user?.email}`, {
+      withCredentials: true,
+    });
     setBids(data);
   };
 
@@ -25,15 +28,24 @@ const MyBids = () => {
     try {
       await secureAxios.patch(`/bid-status/${id}`, { status });
       fetchBids();
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `Status has changed to ${status}`,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <section className="container px-4 mx-auto my-12">
+    <section className="container px-5 mx-auto mt-12 pb-16">
       <div className="flex items-center gap-x-3">
-        <h2 className="text-lg font-medium text-gray-800 ">My Bids</h2>
+        <h2 className="text-lg font-medium text-gray-800">My Bids</h2>
 
         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
           {bids.length} Bid
@@ -41,8 +53,8 @@ const MyBids = () => {
       </div>
 
       <div className="flex flex-col mt-6">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div className="overflow-x-auto">
+          <div className="inline-block min-w-full py-2 align-middle">
             <div className="overflow-hidden border border-gray-200  md:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">

@@ -10,6 +10,9 @@ import PrivateRoute from "../routes/PrivateRoute";
 import CourseDetails from "../pages/CourseDetails";
 import axios from "axios";
 import MyBids from "../pages/MyBids";
+import BidRequests from "../pages/BidRequests";
+import MyPostedCourses from "../pages/MyPostedCourses";
+import UpdateCourse from "../pages/UpdateCourse";
 
 const router = createBrowserRouter([
   {
@@ -52,12 +55,29 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/my-posted-courses",
+        // loader: () => fetch(`${import.meta.env.VITE_API_URL}/courses`),
+        element: <MyPostedCourses />
+      },
+      {
         path: "/my-bids",
         element: (
           <PrivateRoute>
             <MyBids />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/bid-requests",
+        element: (
+          <PrivateRoute>
+            <BidRequests />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update-course/:id",
+        element: <UpdateCourse />
       },
     ],
   },
