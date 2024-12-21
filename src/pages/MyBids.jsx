@@ -38,7 +38,7 @@ const MyBids = () => {
       });
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

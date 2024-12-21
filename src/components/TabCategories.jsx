@@ -1,22 +1,24 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import CourseCard from "./CourseCard";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "./Loading";
+import { useQuery } from "@tanstack/react-query";
 
 const TabCategories = () => {
-  const [courses, setCourses] = useState([]);
-  // console.log(courses);
+  const { data: courses, isLoading } = useQuery({
+    queryKey: ["courses"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_API_URL
+        }/courses`
+      );
+      return data;
+    },
+  });
 
-  const allCourses = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/courses`);
-
-    setCourses(data);
-  };
-
-  useEffect(() => {
-    allCourses();
-  }, []);
+  if (isLoading) return <Loading />;
 
   return (
     <Tabs>

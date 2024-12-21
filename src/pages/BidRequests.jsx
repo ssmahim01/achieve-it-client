@@ -7,7 +7,7 @@ import useAuth from "../context/useAuth";
 const BidRequests = () => {
   const { user } = useAuth();
   const [bids, setBids] = useState([]);
-  console.log(bids);
+  // console.log(bids);
   const secureAxios = useAxiosSecure();
 
   const fetchAllBids = async () => {
@@ -31,7 +31,7 @@ const BidRequests = () => {
       { status }
     );
 
-    console.log(data);
+    // console.log(data);
 
     toast.success(`Bid status is ${status}`, { position: "top-center" });
 

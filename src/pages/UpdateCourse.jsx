@@ -6,13 +6,16 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const UpdateCourse = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const { user } = useAuth();
-  const [course, setCourse] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const { user } = useAuth();
+    const [course, setCourse] = useState({});
+    // console.log(course?.category);
+    const { course_title, price, category, description } = course || {};
+    const [startDate, setStartDate] = useState(new Date());
+    const [categoryData, setCategoryData] = useState(category);
+    // console.log(categoryData);
 
-  //   console.log(id);
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/course/${id}`)
       .then((res) => res.json())
@@ -22,7 +25,6 @@ const UpdateCourse = () => {
       });
   }, [id]);
 
-  const { course_title, category, price, description } = course || {};
 
   const handleUpdateCourse = async (e) => {
     e.preventDefault();
@@ -116,13 +118,14 @@ const UpdateCourse = () => {
             </div>
 
             <div className="flex flex-col gap-2 ">
-              <label className="text-gray-700 " htmlFor="category">
+              <label className="text-gray-700" htmlFor="category">
                 Category
               </label>
               <select
                 name="category"
                 id="category"
-                defaultValue={category}
+                value={categoryData || course?.category}
+                onChange={(e) => setCategoryData(e.target.value)}
                 className="border p-2 rounded-md"
               >
                 <option value="Web Development">Web Development</option>

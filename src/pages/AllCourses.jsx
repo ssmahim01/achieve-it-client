@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router-dom";
 import CourseCard from "../components/CourseCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
